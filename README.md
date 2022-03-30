@@ -1,7 +1,8 @@
 # idporten-identifikatorer
 
-![Maven build status](https://github.com/felleslosninger/idporten-generate-fnr/actions/workflows/call-maventests.yml/badge.svg?branch=main)
- 
+![Maven build status](https://github.com/felleslosninger/idporten-generate-fnr/actions/workflows/call-maventests.yml/badge.svg)
+[![Latest Stable Version](https://img.shields.io/github/v/release/felleslosninger/idporten-generate-fnr?display_name=tag)](https://github.com/felleslosninger/idporten-generate-fnr/releases)
+
 Generate random syntetic personidentfiers (fodselsnummer) for Norway.
 https://www.skatteetaten.no/person/folkeregister/fodsel-og-navnevalg/barn-fodt-i-norge/fodselsnummer/
 
