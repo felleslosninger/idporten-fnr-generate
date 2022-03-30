@@ -9,7 +9,7 @@ https://www.skatteetaten.no/person/folkeregister/fodsel-og-navnevalg/barn-fodt-i
 ## Requirements
 To build and run the library you need:
 
-* Java 17
+* Java 11
 * Maven
 
 ## Running the library locally
