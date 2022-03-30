@@ -1,0 +1,16 @@
+# This workflow will build a Java project with Maven
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Release to github packages
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  call-workflow-release:
+    uses: felleslosninger/eid-github-workflows/.github/workflows/maven-release-lib.yml@work/ID-1627
+    with:
+      java-version: 17
+    secrets:
+      eid-build-token: ${{ secrets.EID_BUILD_PAT }}
