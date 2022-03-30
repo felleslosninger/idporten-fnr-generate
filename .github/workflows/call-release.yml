@@ -14,3 +14,5 @@ jobs:
       java-version: 11
     secrets:
       eid-build-token: ${{ secrets.EID_BUILD_PAT }}
+      maven-user: ${{ secrets.MAVEN_USER }}
+      maven-password: ${{ secrets.MAVEN_PASSWORD }}
