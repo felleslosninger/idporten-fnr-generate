@@ -13,6 +13,7 @@ jobs:
     with:
       java-version: 11
     secrets:
-      eid-build-token: ${{ secrets.EID_BUILD_PAT }}
+      packages-user: ${{ secrets.CREATE_PACKAGES_USER }}
+      packages-token: ${{ secrets.CREATE_PACKAGES_TOKEN }}
       maven-user: ${{ secrets.MAVEN_USER }}
       maven-password: ${{ secrets.MAVEN_PASSWORD }}
