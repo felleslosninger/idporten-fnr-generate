@@ -9,7 +9,7 @@ on:
 
 jobs:
   call-workflow-release:
-    uses: felleslosninger/eid-github-workflows/.github/workflows/maven-release-lib.yml@work/ID-1627
+    uses: felleslosninger/eid-github-workflows/.github/workflows/maven-release-lib.yml@main
     with:
       java-version: 11
     secrets:

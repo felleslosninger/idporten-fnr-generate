@@ -9,7 +9,7 @@ on:
 
 jobs:
   call-workflow-maven-build:
-    uses: felleslosninger/eid-github-workflows/.github/workflows/maven-build-lib.yml@work/ID-1627
+    uses: felleslosninger/eid-github-workflows/.github/workflows/maven-build-lib.yml@main
     with:
       java-version: 11
     secrets:
