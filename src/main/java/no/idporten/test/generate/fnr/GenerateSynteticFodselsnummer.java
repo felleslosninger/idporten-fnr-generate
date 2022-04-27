@@ -14,9 +14,12 @@ public class GenerateSynteticFodselsnummer {
 
 
     public String generateOneSynteticFodselsnummerFromYear(final int year) {
-        String fnr = generateValidFodselsnummer(year);
-        System.out.println(fnr);
-        return fnr;
+        return generateValidFodselsnummer(year);
+    }
+
+    public String generateOneSynteticFodselsnummers() {
+        int randomYear = getRandomNumberInRange(1855, Year.now().getValue());
+        return generateOneSynteticFodselsnummerFromYear(randomYear);
     }
 
     public List<String> generateListOfSynteticFodselsnummers(final int count) {
@@ -26,7 +29,6 @@ public class GenerateSynteticFodselsnummer {
             int randomYear = getRandomNumberInRange(1855, Year.now().getValue());
             String fnr = generateValidFodselsnummer(randomYear);
             fodselsnummers.add(fnr);
-            System.out.println(fnr);
         }
         return fodselsnummers;
 

@@ -15,21 +15,33 @@ class GenerateSynteticFodselsnummerTest {
     }
 
     @Test
-    public void when_generate_one_fnr_then_one_valid_fnr_is_returned(){
+    public void when_generate_one_fnr_then_one_valid_fnr_is_returned_for_year(){
         GenerateSynteticFodselsnummer generator = new GenerateSynteticFodselsnummer();
         int birthYear = 2001;
         String fnr = generator.generateOneSynteticFodselsnummerFromYear(birthYear);
+        System.out.println(fnr);
         assertNotNull(fnr);
         assertEquals(11, fnr.length());
         assertEquals(4, fnr.indexOf("01")); //ddMMyy.....
         PersonIdentifierValidator.isValid(fnr);
     }
+
+    @Test
+    public void when_generate_one_fnr_then_one_valid_fnr_is_returned(){
+        GenerateSynteticFodselsnummer generator = new GenerateSynteticFodselsnummer();
+        String fnr = generator.generateOneSynteticFodselsnummers();
+        System.out.println(fnr);
+        assertNotNull(fnr);
+        PersonIdentifierValidator.isValid(fnr);
+    }
+
     @Test
     public void when_generate_10_fnr_then_10_valid_fnr_is_returned(){
         GenerateSynteticFodselsnummer generator = new GenerateSynteticFodselsnummer();
         List<String> fnrs = generator.generateListOfSynteticFodselsnummers(10);
         assertEquals(10, fnrs.size());
         for(String fnr: fnrs){
+            System.out.println(fnr);
             assertNotNull(fnr);
             PersonIdentifierValidator.isValid(fnr);
         }

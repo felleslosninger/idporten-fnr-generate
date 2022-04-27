@@ -31,21 +31,11 @@ Include in pom.xml
             <scope>test</scope>
         </dependency>
 ```
-Setup TestData class to call this library:
-```
-public class TestData {
-
-    private static GenerateSynteticFodselsnummer synpidGenerator = new GenerateSynteticFodselsnummer();
-
-    public static String randomSynpid() {
-        return synpidGenerator.generateListOfSynteticFodselsnummers(1).get(0);
-    }
-}
-```
-Use in UnitTest:
+Simple usage in UnitTest:
 ```
 public void test(){
-        String personIdentifier = TestData.randomSynpid();
+        GenerateSynteticFodselsnummer synpidGenerator = new GenerateSynteticFodselsnummer();
+        String personIdentifier = synpidGenerator.generateOneSynteticFodselsnummers();
         // Use it and do your testing
 }
 ```
