@@ -1,4 +1,4 @@
-# idporten-identifikatorer
+# idporten-generate-fnr
 
 ![Maven build status](https://github.com/felleslosninger/idporten-generate-fnr/actions/workflows/call-maventests.yml/badge.svg)
 [![Latest Stable Version](https://img.shields.io/github/v/release/felleslosninger/idporten-generate-fnr?display_name=tag)](https://github.com/felleslosninger/idporten-generate-fnr/releases)
@@ -19,3 +19,33 @@ From the command line:
 mvn install
 ```
 See [GenerateSynteticFodselsnummerTest.java](/src/test/java/no/idporten/test/generate/fnr/GenerateSynteticFodselsnummerTest.java)
+
+## To use it to generate test-user in another projects test
+
+Include in pom.xml
+```
+        <dependency>
+            <groupId>no.idporten.test.generate</groupId>
+            <artifactId>idporten-fnr-generate</artifactId>
+            <version>0.1.5</version>
+            <scope>test</scope>
+        </dependency>
+```
+Setup TestData class to call this library:
+```
+public class TestData {
+
+    private static GenerateSynteticFodselsnummer synpidGenerator = new GenerateSynteticFodselsnummer();
+
+    public static String randomSynpid() {
+        return synpidGenerator.generateListOfSynteticFodselsnummers(1).get(0);
+    }
+}
+```
+Use in UnitTest:
+```
+public void test(){
+        String personIdentifier = TestData.randomSynpid();
+        // Use it and do your testing
+}
+```
