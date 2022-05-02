@@ -34,8 +34,8 @@ Include in pom.xml
 Simple usage in UnitTest:
 ```
 public void test(){
-        GenerateSynteticFodselsnummer synpidGenerator = new GenerateSynteticFodselsnummer();
-        String personIdentifier = synpidGenerator.generateSynteticFodselsnummers();
+        SyntheticFodselsnummerGenerator synFnrGenerator = new SyntheticFodselsnummerGenerator();
+        String personIdentifier = synFnrGenerator.fodselsnummer();
         // Use it and do your testing
 }
 ```
