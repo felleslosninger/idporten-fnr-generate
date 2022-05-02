@@ -13,13 +13,13 @@ public class GenerateSynteticFodselsnummer {
     final int ILLEGAL_CHECKSUM_VALUE = 10;
 
 
-    public String generateOneSynteticFodselsnummerFromYear(final int year) {
+    public String generateSynteticFodselsnummerFromYear(final int year) {
         return generateValidFodselsnummer(year);
     }
 
-    public String generateOneSynteticFodselsnummers() {
+    public String generateSynteticFodselsnummers() {
         int randomYear = getRandomNumberInRange(1855, Year.now().getValue());
-        return generateOneSynteticFodselsnummerFromYear(randomYear);
+        return generateSynteticFodselsnummerFromYear(randomYear);
     }
 
     public List<String> generateListOfSynteticFodselsnummers(final int count) {

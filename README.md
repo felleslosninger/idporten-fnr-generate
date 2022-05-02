@@ -35,7 +35,7 @@ Simple usage in UnitTest:
 ```
 public void test(){
         GenerateSynteticFodselsnummer synpidGenerator = new GenerateSynteticFodselsnummer();
-        String personIdentifier = synpidGenerator.generateOneSynteticFodselsnummers();
+        String personIdentifier = synpidGenerator.generateSynteticFodselsnummers();
         // Use it and do your testing
 }
 ```
