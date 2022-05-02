@@ -9,20 +9,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class GenerateSynteticFodselsnummer {
+public class SyntheticFodselsnummerGenerator {
     final int ILLEGAL_CHECKSUM_VALUE = 10;
 
 
-    public String generateSynteticFodselsnummerFromYear(final int year) {
+    public String fodselsnummerFromYear(final int year) {
         return generateValidFodselsnummer(year);
     }
 
-    public String generateSynteticFodselsnummers() {
+    public String fodselsnummer() {
         int randomYear = getRandomNumberInRange(1855, Year.now().getValue());
-        return generateSynteticFodselsnummerFromYear(randomYear);
+        return fodselsnummerFromYear(randomYear);
     }
 
-    public List<String> generateListOfSynteticFodselsnummers(final int count) {
+    public List<String> listOfFodselsnummers(final int count) {
 
         List<String> fodselsnummers = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -46,13 +46,13 @@ public class GenerateSynteticFodselsnummer {
 
     private String generateFodselsnummer(int year) {
         int[] digits = getFodselsnummerWithEmptyChecksums(year);
-        int checksum1 = PersonIdentifiserChecksum.getChecksum1(digits);
+        int checksum1 = FodselsnummerChecksum.getChecksum1(digits);
 
         if (checksum1 == ILLEGAL_CHECKSUM_VALUE) {
             throw new RuntimeException("Invalid checksum1 " + checksum1 + ", please try different individNumber.");
         }
         digits[9] = checksum1;
-        int checksum2 = PersonIdentifiserChecksum.getChecksum2(digits, checksum1);
+        int checksum2 = FodselsnummerChecksum.getChecksum2(digits, checksum1);
         if (checksum2 == ILLEGAL_CHECKSUM_VALUE) {
             throw new RuntimeException("Invalid checksum2: " + checksum2 + ", please try different individNumber.");
         }
