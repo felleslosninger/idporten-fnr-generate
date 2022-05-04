@@ -1,6 +1,6 @@
 package no.idporten.test.generate.fnr;
 
-public class PersonIdentifiserChecksum {
+public class FodselsnummerChecksum {
 
     public static int getChecksum1(int[] n) {
         int checksum1 = 11
