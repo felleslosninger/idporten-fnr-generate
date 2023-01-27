@@ -1,5 +1,8 @@
 package no.idporten.test.generate.fnr;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
@@ -10,6 +13,7 @@ import java.util.List;
 import java.util.Random;
 
 public class SyntheticFodselsnummerGenerator {
+    private static final Logger log = LoggerFactory.getLogger(SyntheticFodselsnummerGenerator.class);
     final int ILLEGAL_CHECKSUM_VALUE = 10;
 
 
@@ -38,7 +42,7 @@ public class SyntheticFodselsnummerGenerator {
         try {
             return generateFodselsnummer(year);
         } catch (RuntimeException e) {
-            System.out.println("Try regenerate, but failed: " + e.getMessage());
+            log.debug("Try regenerate, but failed: " + e.getMessage());
             return generateValidFodselsnummer(year);
         }
     }

@@ -14,6 +14,7 @@
         <junit-jupiter-version>5.9.1</junit-jupiter-version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <slf4j.version>2.0.6</slf4j.version>
     </properties>
 
     <dependencies>
@@ -22,6 +23,11 @@
             <artifactId>idporten-validators</artifactId>
             <version>${idporten-validators-version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
