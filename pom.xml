@@ -11,7 +11,7 @@
 
     <properties>
         <idporten-validators-version>0.1.1</idporten-validators-version>
-        <junit-jupiter-version>5.9.3</junit-jupiter-version>
+        <junit-jupiter-version>5.10.0</junit-jupiter-version>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <slf4j.version>2.0.7</slf4j.version>
