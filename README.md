@@ -27,7 +27,7 @@ Include in pom.xml
         <dependency>
             <groupId>no.idporten.test.generate</groupId>
             <artifactId>idporten-fnr-generate</artifactId>
-            <version>0.1.5</version>
+            <version>1.0.1</version>
             <scope>test</scope>
         </dependency>
 ```
