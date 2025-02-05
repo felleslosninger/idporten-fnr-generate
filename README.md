@@ -10,13 +10,12 @@ https://www.skatteetaten.no/person/folkeregister/fodsel-og-navnevalg/barn-fodt-i
 To build and run the library you need:
 
 * Java 17
-* Maven
 
 ## Running the library locally
 
 From the command line: 
 ```
-mvn install
+./mvnw install
 ```
 See [GenerateSynteticFodselsnummerTest.java](/src/test/java/no/idporten/test/generate/fnr/GenerateSynteticFodselsnummerTest.java)
 
