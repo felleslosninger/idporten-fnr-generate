@@ -9,7 +9,7 @@ https://www.skatteetaten.no/person/folkeregister/fodsel-og-navnevalg/barn-fodt-i
 ## Requirements
 To build and run the library you need:
 
-* Java 11
+* Java 17
 * Maven
 
 ## Running the library locally
@@ -27,7 +27,7 @@ Include in pom.xml
         <dependency>
             <groupId>no.idporten.test.generate</groupId>
             <artifactId>idporten-fnr-generate</artifactId>
-            <version>1.0.1</version>
+            <version>1.1.0</version>
             <scope>test</scope>
         </dependency>
 ```
