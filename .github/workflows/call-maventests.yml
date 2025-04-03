@@ -9,7 +9,7 @@ on:
 
 jobs:
   call-workflow-maven-build:
-    uses: felleslosninger/github-workflows/.github/workflows/ci-maven-build-lib.yml@main
+    uses: felleslosninger/github-workflows/.github/workflows/ci-maven-build-lib.yml@PF-1809-1
     with:
       java-version: 17
     secrets: inherit
