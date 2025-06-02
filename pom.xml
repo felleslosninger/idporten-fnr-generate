@@ -10,7 +10,7 @@
     <description>Library for ID-porten generate test fodselsnummer</description>
 
     <properties>
-        <idporten-validators-version>1.4.2</idporten-validators-version>
+        <idporten-validators-version>1.5.0</idporten-validators-version>
         <junit-jupiter-version>5.11.4</junit-jupiter-version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
