@@ -12,6 +12,7 @@ class SyntheticFodselsnummerGeneratorTest {
     public void setup(){
         PersonIdentifierValidator.setSyntheticPersonIdentifiersAllowed(true);
         PersonIdentifierValidator.setRealPersonIdentifiersAllowed(false);
+        PersonIdentifierValidator.setExpandedPersonIdentifiersAllowed(false);
     }
 
     @Test
@@ -47,4 +48,27 @@ class SyntheticFodselsnummerGeneratorTest {
         }
 
     }
+
+    @Test
+    public void when_generate_one_expanded_fnr_then_one_valid_expanded_fnr_is_returned(){
+        SyntheticFodselsnummerGenerator generator = new SyntheticFodselsnummerGenerator();
+        String fnr = generator.generateExpandedFodselsnummer(false);
+        System.out.println(fnr);
+        assertNotNull(fnr);
+        PersonIdentifierValidator.setExpandedPersonIdentifiersAllowed(true);
+        PersonIdentifierValidator.isValid(fnr);
+    }
+
+    @Test
+    public void when_generate_one_expanded_dnr_then_one_valid_expanded_dnr_is_returned(){
+        SyntheticFodselsnummerGenerator generator = new SyntheticFodselsnummerGenerator();
+        String dnr = generator.generateExpandedFodselsnummer(true);
+        System.out.println(dnr);
+        assertNotNull(dnr);
+        PersonIdentifierValidator.setExpandedPersonIdentifiersAllowed(true);
+        PersonIdentifierValidator.isValid(dnr);
+        assertTrue(dnr.startsWith("4") || dnr.startsWith("5") || dnr.startsWith("6") || dnr.startsWith("7"));
+    }
+
+
 }

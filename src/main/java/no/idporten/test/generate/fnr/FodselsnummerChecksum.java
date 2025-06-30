@@ -3,8 +3,7 @@ package no.idporten.test.generate.fnr;
 public class FodselsnummerChecksum {
 
     public static int getChecksum1(int[] n) {
-        int checksum1 = 11
-                - ((3 * n[0] + 7 * n[1] + 6 * n[2] + 1 * n[3] + 8 * n[4] + 9 * n[5] + 4 * n[6] + 5 * n[7] + 2 * n[8]) % 11);
+        int checksum1 = getBeregnetRestSiffer1(n);
         if (checksum1 == 11) {
             checksum1 = 0;
         }
@@ -20,5 +19,7 @@ public class FodselsnummerChecksum {
         return checksum2;
     }
 
-
+    public static int getBeregnetRestSiffer1(int[] n) {
+        return 11 - ((3 * n[0] + 7 * n[1] + 6 * n[2] + 1 * n[3] + 8 * n[4] + 9 * n[5] + 4 * n[6] + 5 * n[7] + 2 * n[8]) % 11);
+    }
 }

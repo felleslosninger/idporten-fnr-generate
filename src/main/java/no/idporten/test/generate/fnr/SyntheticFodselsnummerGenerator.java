@@ -17,8 +17,26 @@ public class SyntheticFodselsnummerGenerator {
     final int ILLEGAL_CHECKSUM_VALUE = 10;
 
 
+    public String generateExpandedFodselsnummer(final boolean isDnummer) {
+        int randomYear = getRandomNumberInRange(1855, Year.now().getValue());
+        return generateExpandedFodselsnummerFromYear(randomYear, isDnummer);
+    }
+
+    public String generateExpandedFodselsnummerFromYear(final int year, final boolean isDnummer) {
+        return generateValidFodselsnummer(year, isDnummer, true);
+    }
+
     public String fodselsnummerFromYear(final int year) {
-        return generateValidFodselsnummer(year);
+        return generateValidFodselsnummer(year, false, false);
+    }
+
+    public String dnummerFromYear(final int year) {
+        return generateValidFodselsnummer(year, true, false);
+    }
+
+    public String dnummer() {
+        int randomYear = getRandomNumberInRange(1855, Year.now().getValue());
+        return fodselsnummerFromYear(randomYear);
     }
 
     public String fodselsnummer() {
@@ -31,32 +49,55 @@ public class SyntheticFodselsnummerGenerator {
         List<String> fodselsnummers = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             int randomYear = getRandomNumberInRange(1855, Year.now().getValue());
-            String fnr = generateValidFodselsnummer(randomYear);
+            String fnr = generateValidFodselsnummer(randomYear, false, false);
             fodselsnummers.add(fnr);
         }
         return fodselsnummers;
 
     }
 
-    private String generateValidFodselsnummer(final int year) {
+    public List<String> listOfDnummers(final int count) {
+
+        List<String> fodselsnummers = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            int randomYear = getRandomNumberInRange(1855, Year.now().getValue());
+            String fnr = generateValidFodselsnummer(randomYear, true, false);
+            fodselsnummers.add(fnr);
+        }
+        return fodselsnummers;
+
+    }
+
+    private String generateValidFodselsnummer(final int year, final boolean isDNummer, final boolean isExpanded) {
         try {
-            return generateFodselsnummer(year);
+            return generateFodselsnummer(year, isDNummer, isExpanded);
         } catch (RuntimeException e) {
             log.debug("Try regenerate, but failed: " + e.getMessage());
-            return generateValidFodselsnummer(year);
+            return generateValidFodselsnummer(year, isDNummer, isExpanded);
         }
     }
 
-
-    private String generateFodselsnummer(int year) {
-        int[] digits = getFodselsnummerWithEmptyChecksums(year);
-        int checksum1 = FodselsnummerChecksum.getChecksum1(digits);
-
-        if (checksum1 == ILLEGAL_CHECKSUM_VALUE) {
-            throw new RuntimeException("Invalid checksum1 " + checksum1 + ", please try different individNumber.");
+    private int handleFirstChecksum(int[] digits, boolean isExpanded) {
+        int checksum1 = FodselsnummerChecksum.getBeregnetRestSiffer1(digits);
+        if (isExpanded) {
+            // For expanded numbers, we can not generate checksum1, so we just return 0.
+            checksum1 += getRandomNumberInRange(1,3);
+        } else {
+            // For normal numbers, we can generate checksum1.
+            if (checksum1 == 11) {
+                checksum1 = 0; // If checksum1 is 11, we set it to 0.
+            } else if (checksum1 == ILLEGAL_CHECKSUM_VALUE) {
+                throw new RuntimeException("Invalid checksum1 " + checksum1 + ", please try different individNumber.");
+            }
         }
-        digits[9] = checksum1;
-        int checksum2 = FodselsnummerChecksum.getChecksum2(digits, checksum1);
+        return checksum1;
+    }
+
+    private String generateFodselsnummer(int year, boolean isDnummer, boolean isExpanded) {
+        int[] digits = getFodselsnummerWithEmptyChecksums(year, isDnummer, isExpanded);
+
+        digits[9] = handleFirstChecksum(digits, isExpanded);
+        int checksum2 = FodselsnummerChecksum.getChecksum2(digits, digits[9]);
         if (checksum2 == ILLEGAL_CHECKSUM_VALUE) {
             throw new RuntimeException("Invalid checksum2: " + checksum2 + ", please try different individNumber.");
         }
@@ -68,16 +109,12 @@ public class SyntheticFodselsnummerGenerator {
                 .reduce((a, b) -> a.concat("").concat(b))
                 .get();
 
-        //if (!PersonIdentifierValidator.isValid(synteticPid)) {
-        //  throw new RuntimeException("Sorry, I failed to generate valid, syntetic fodselsnummer: " + synteticPid);
-        //}
-
         return synteticPid;
     }
 
-    private int[] getFodselsnummerWithEmptyChecksums(int randomYear) {
-        final String ssnDate = generateRandomSsnDate(randomYear);
-        String individString = padding0sToStart(getIndividNumber(randomYear), 3);
+    private int[] getFodselsnummerWithEmptyChecksums(int randomYear, boolean isDnummer, boolean isExpanded) {
+        final String ssnDate = generateRandomSsnDate(randomYear, isDnummer);
+        String individString = padding0sToStart(getIndividNumber(randomYear, isExpanded), 3);
         String ssn = ssnDate + individString + "00"; // add 0 for the two checksum digits.
         return ssn.chars().map(i -> Character.digit((char) i, 10)).toArray();
     }
@@ -96,7 +133,10 @@ public class SyntheticFodselsnummerGenerator {
      * @param birthYear 4 digits, between 1855 and 2040
      * @return 3 digit individNumber, -1 if failed to calculate for input year
      */
-    private int getIndividNumber(final int birthYear) {
+    private int getIndividNumber(final int birthYear, final boolean isExpanded) {
+        if (isExpanded) {
+            return getRandomNumberInRange(0, 999);
+        }
         if (birthYear < 1900 && birthYear > 1854) {
             return getRandomNumberInRange(500, 749);
         }
@@ -114,7 +154,7 @@ public class SyntheticFodselsnummerGenerator {
     }
 
 
-    private String generateRandomSsnDate(int year) {
+    private String generateRandomSsnDate(int year, boolean isDnummer) {
         int randomMonth = getRandomNumberInRange(1, 12);
 
         YearMonth yearMonthObject = YearMonth.of(year, randomMonth);
@@ -123,6 +163,13 @@ public class SyntheticFodselsnummerGenerator {
 
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("ddMMyy");
         String randomDate = LocalDate.of(year, randomMonth, randomDay).format(dateTimeFormatter);
+
+        // if D-number, then add 40 to the first digit of the day
+        if (isDnummer) {
+            int day = Integer.parseInt(randomDate.substring(0, 2));
+            day += 40; // D-number has first digit of day between 4 and 7
+            randomDate = padding0sToStart(day, 2) + randomDate.substring(2);
+        }
 
         // Add 80 to month to become syntetic fodselsnummer instead of reel fnr
         return padding0sToStart(Integer.parseInt(randomDate) + 8000, 6);
