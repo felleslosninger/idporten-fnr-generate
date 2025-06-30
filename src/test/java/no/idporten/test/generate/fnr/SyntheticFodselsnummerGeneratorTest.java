@@ -12,6 +12,7 @@ class SyntheticFodselsnummerGeneratorTest {
     public void setup(){
         PersonIdentifierValidator.setSyntheticPersonIdentifiersAllowed(true);
         PersonIdentifierValidator.setRealPersonIdentifiersAllowed(false);
+        PersonIdentifierValidator.setExpandedPersonIdentifiersAllowed(false);
     }
 
     @Test
@@ -36,6 +37,16 @@ class SyntheticFodselsnummerGeneratorTest {
     }
 
     @Test
+    public void when_generate_one_dnr_then_one_valid_dnr_is_returned(){
+        SyntheticFodselsnummerGenerator generator = new SyntheticFodselsnummerGenerator();
+        String dnr = generator.dnummer();
+        System.out.println(dnr);
+        assertNotNull(dnr);
+        PersonIdentifierValidator.isValid(dnr);
+        assertTrue(dnr.startsWith("4") || dnr.startsWith("5") || dnr.startsWith("6") || dnr.startsWith("7"));
+    }
+
+    @Test
     public void when_generate_10_fnr_then_10_valid_fnr_is_returned(){
         SyntheticFodselsnummerGenerator generator = new SyntheticFodselsnummerGenerator();
         List<String> fnrs = generator.listOfFodselsnummers(10);
@@ -47,4 +58,31 @@ class SyntheticFodselsnummerGeneratorTest {
         }
 
     }
+
+    @Test
+    public void when_generate_one_expanded_fnr_then_one_valid_expanded_fnr_is_returned(){
+        SyntheticFodselsnummerGenerator generator = new SyntheticFodselsnummerGenerator();
+        String fnr = generator.generateExpandedFodselsnummer();
+        System.out.println(fnr);
+        assertNotNull(fnr);
+        PersonIdentifierValidator.setExpandedPersonIdentifiersAllowed(true);
+        PersonIdentifierValidator.isValid(fnr);
+        PersonIdentifierValidator.setRealPersonIdentifiersAllowed(false);
+        assertFalse(PersonIdentifierValidator.isValid(fnr));
+    }
+
+    @Test
+    public void when_generate_one_expanded_dnr_then_one_valid_expanded_dnr_is_returned(){
+        SyntheticFodselsnummerGenerator generator = new SyntheticFodselsnummerGenerator();
+        String dnr = generator.generateExpandedDnummer();
+        System.out.println(dnr);
+        assertNotNull(dnr);
+        PersonIdentifierValidator.setExpandedPersonIdentifiersAllowed(true);
+        PersonIdentifierValidator.isValid(dnr);
+        PersonIdentifierValidator.setRealPersonIdentifiersAllowed(false);
+        assertFalse(PersonIdentifierValidator.isValid(dnr));
+        assertTrue(dnr.startsWith("4") || dnr.startsWith("5") || dnr.startsWith("6") || dnr.startsWith("7"));
+    }
+
+
 }
